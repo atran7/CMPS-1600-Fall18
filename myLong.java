@@ -3,17 +3,20 @@ import java.util.Scanner;
 public class myLong
 {
     int [] intToLong = new int [100];
-    int y = 0; //used for the getLong method to keep track of the indices with actual values in them, since I did not have access to aLong.length() for the for loop
     int [] array = new int [100];
 
-    String aLong;
-    int strlen;
+    private String aLong;
+    private int strlen;
 
     public myLong ()
     {
         aLong = "";
         strlen = -1;
     }
+
+    /*
+        main() - This function sets the string input into an integer array with index of 100, so each integer gets its own index
+     */
 
     public static void main(String[] args)
     {
@@ -26,6 +29,10 @@ public class myLong
         }
 
     }
+
+    /*
+        setLong() - This function gets the user input and puts that string into the integer array
+     */
 
     public void setLong()
     {
@@ -40,6 +47,10 @@ public class myLong
         }
 
     }
+
+    /*
+        getLong() - This function returns the integer array
+     */
 
     public  void getLong ()
     {
@@ -59,6 +70,9 @@ public class myLong
 
     }
 
+    /*
+        add(myLong a) - this function adds two instances of myLong together
+     */
 
    public int[] add(myLong a)
     {
@@ -81,6 +95,11 @@ public class myLong
 
         return array;
     }
+
+    /*
+        subtract (myLong a) - this function subtracts two instances of myLong only if myLong a is smaller than This.
+        If a is larger, then an error message is returned
+     */
 
     public int [] subtract (myLong a)
     {
@@ -140,34 +159,43 @@ public class myLong
         return difference;
     }
 
+    /*
+        multiply (myLong a) - this function multiplies two instances of myLong together
+
+        ONLY WORKS UP UNTIL THE PRODUCT EQUALS 9 FOR NOW
+     */
+
     public int [] multiply (myLong a)
     {
         int [] A = a.intToLong;
         int [] This = this.intToLong;
 
+        int[] addproduct = new int [100];
+
         int[] product = new int [100];
-        int [] addproduct = new int [100];
+
         int carry = 0;
 
-        int multiply = 1;
+        int multiply;
+
 
         for (int i = This.length-1; i > 0; i--)
         {
-            for (int x = This.length-1; x > This.length-multiply; x--)
+            multiply = A[i] * This[i];
+
+            if (multiply >=10)
             {
-                addproduct[i] = A[i] * This[x];
+                carry = multiply %10;
+                product [i] = multiply/10;
+                product[i] = A[i] * This[i]+carry;
             }
+            else
+            {
+                product[i] = multiply;
+            }
+
         }
 
-        for (int x = This.length-1; x > 0; x--)
-        {
-            if (product[x] >= 10)
-            {
-                carry = product[x] %10;
-                product [x] = product[x]/10;
-                product[x-1] = product[x-1]+carry;
-            }
-        }
         for (int i = 0; i<100; i++)
         {
             System.out.print(product[i]);
