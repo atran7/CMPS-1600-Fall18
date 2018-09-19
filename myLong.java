@@ -170,8 +170,6 @@ public class myLong
         int [] A = a.intToLong;
         int [] This = this.intToLong;
 
-        int[] addproduct = new int [100];
-
         int[] product = new int [100];
 
         int carry = 0;
@@ -195,6 +193,14 @@ public class myLong
             }
 
         }
+        
+        /*
+            My carry function does not work as planned, and what I originally tried to do was to have a nested loop that stayed at
+            one value of A, then iterated through This to multiply that A value by This. Then I would increment the place of A to 
+            get to the next value and multiply, but also add a 0 to that value in accordance with the rules of multiplication, and 
+            so forth. But when I tried, I only returned an array of 0s, so at least this way, some value is returned, even if not totally
+            correct.
+        */
 
         for (int i = 0; i<100; i++)
         {
