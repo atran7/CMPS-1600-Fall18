@@ -1,212 +1,273 @@
-import java.util.Scanner;
+import java.util.ArrayList;
 
-public class myLong
-{
-    int [] intToLong = new int [100];
-    int [] array = new int [100];
+public class myLong {
 
-    private String aLong;
+
+    ArrayList<Integer> intToLong = new ArrayList<Integer>();
+
     private int strlen;
+    private String aLong;
 
-    public myLong ()
+    public myLong()
     {
         aLong = "";
         strlen = -1;
     }
 
     /*
-        main() - This function sets the string input into an integer array with index of 100, so each integer gets its own index
-     */
-
-    public static void main(String[] args)
-    {
-        Scanner scnr = new Scanner(System.in);
-        String aLong = scnr.next();
-        int[] intToLong = new int[100];
-        for (int i = 0; i <aLong.length(); i++)
-        {
-            intToLong [i] = Character.getNumericValue(aLong.charAt(i));
-        }
-
-    }
-
-    /*
         setLong() - This function gets the user input and puts that string into the integer array
      */
 
-    public void setLong()
+    public String setLong(String s)
     {
-        Scanner scnr = new Scanner(System.in);
-        aLong = scnr.next();
-        int strlen = aLong.length();
-        for (int i = intToLong.length - 1; i > intToLong.length - strlen - 1; i--)
-        {
-            int x = aLong.length();
-            intToLong[i] = Integer.parseInt(aLong.substring(x - 1));
-            aLong = aLong.substring(0, x - 1);
-        }
+        int strlen = s.length();
+        for (int i = 0; i < strlen; i++) {
 
-    }
-
-    /*
-        getLong() - This function returns the integer array
-     */
-
-    public  void getLong ()
-    {
-        int print;
-        for (int x = 0; x < intToLong.length; x++)
-        {
-            if (intToLong[x] != 0)
+            if (Character.toString(s.charAt(i)).equals('-'))
             {
-                print = x;
-                for (int i = print; i < 100; i++)
-                {
-                    System.out.print(intToLong[i]);
-                }
-                break;
-            }
-        }
-
-    }
-
-    /*
-        add(myLong a) - this function adds two instances of myLong together
-     */
-
-   public int[] add(myLong a)
-    {
-        int [] A = a.intToLong;
-        int [] This = this.intToLong;
-
-        for (int x = intToLong.length-1; x > 0; x--)
-        {
-            array[x] = This[x] + A[x];
-        }
-
-        for (int y = intToLong.length-1; y > 0; y--)
-        {
-            if (array[y] >= 10)
-            {
-                array[y] = array[y] % 10;
-                array[y-1] = array[y - 1] + 1;
-            }
-        }
-
-        return array;
-    }
-
-    /*
-        subtract (myLong a) - this function subtracts two instances of myLong only if myLong a is smaller than This.
-        If a is larger, then an error message is returned
-     */
-
-    public int [] subtract (myLong a)
-    {
-        int [] A = a.intToLong;
-        int [] This = this.intToLong;
-        int digitT = 0;
-        int digitA = 0;
-        int [] difference = new int[100];
-
-        for (int x = 0; x < A.length; x++)
-        {
-            if (A[x] != 0)
-            {
-                digitA = x;
-                break;
-            }
-        }
-
-        for (int x = 0; x < This.length; x++)
-        {
-            if (This[x] != 0)
-            {
-                digitT = x;
-                break;
-            }
-        }
-
-        if (digitA < digitT)
-        {
-            System.out.print("Error");
-            return difference;
-        }
-        else if (digitA == digitT && This[digitT] < A[digitA])
-        {
-            System.out.print("Error");
-            return difference;
-        }
-
-        for (int i = 99; i>0; i--)
-        {
-            if (This[i] - A[i] >= 0)
-            {
-                difference[i] = This[i] - A[i];
+                aLong = aLong + "-";
             }
 
             else
+            {
+                Integer x = Character.getNumericValue(s.charAt(i));
+                intToLong.add(x);
+            }
+        }
+
+        for (int x = 0; x < intToLong.size(); x++)
+        {
+            aLong = aLong + Integer.toString(x);
+        }
+
+
+        return aLong;
+    }
+
+    public String toString()
+    {
+        ArrayList <Integer> This = this.intToLong;
+        String b = "";
+        String negative = "";
+
+        for (int x = 0; x < This.size(); x++)
+        {
+            if (This.get(x).equals(-1))
+            {
+                b = b + "-";
+            }
+            else {
+                b = b + Integer.toString(This.get(x));
+                negative = negative + Integer.toString(This.get(x));
+            }
+
+            for (int i = 1; i<b.length()-1; i++)
+            {
+                if ((Character.toString(b.charAt(i)).equals("0") && Character.toString(b.charAt(i-1)).equals("0") ))
                 {
-                    difference[i] = (10+This[i]) - A[i];
-                    difference[i-1] = This[i-1]--;
+                    b = b.substring(1);
                 }
+            }
+
 
         }
-        for (int i = 0; i<100; i++)
+
+
+        if (Character.toString(b.charAt(0)).equals("0"))
         {
-            System.out.print(difference[i]);
+            b = b.substring(1);
         }
+
+        if (Integer.toString(This.get(0)).equals("-1") && Integer.toString(This.get(1)).equals("0"))
+        {
+            b = "-" + b;
+        }
+
+        return b;
+    }
+
+    public myLong add(myLong a)
+    {
+        ArrayList <Integer > A = a.intToLong;
+        ArrayList <Integer> This = this.intToLong;
+        ArrayList<Integer> array = new ArrayList<Integer>();
+
+        if (A.size() < This.size())
+        {
+            while (A.size () != This.size())
+            {
+                A.add(0,0);
+            }
+        }
+        else
+        {
+            while (This.size () != A.size())
+            {
+                This.add(0,0);
+            }
+        }
+
+        for (int x = 0; x < This.size(); x++)
+        {
+            array.add(This.get(x) + A.get(x));
+        }
+
+        for (int y = array.size()-1; y > 0; y--)
+        {
+            if (array.get(y) >= 10)
+            {
+                array.set(y,array.get(y) % 10);
+                array.set(y-1, array.get(y-1)+1);
+            }
+        }
+
+
+        String b = "";
+        for (int x = 0; x < array.size(); x++)
+        {
+            b = b + Integer.toString(array.get(x));
+        }
+
+        myLong sum = new myLong();
+        sum.setLong(b);
+
+        return sum;
+    }
+
+    public myLong subtract (myLong a)
+    {
+        ArrayList <Integer > A = a.intToLong;
+        ArrayList <Integer> This = this.intToLong;
+        ArrayList<Integer> array = new ArrayList<Integer>();
+        String d = "";
+        ArrayList<Integer> max = new ArrayList <Integer>();
+        ArrayList<Integer> min = new ArrayList <Integer>();
+        Long z;
+        Long y;
+
+        if (A.size() == This.size())
+        {
+            String c = "";
+            for (int x = 0; x < A.size(); x++)
+            {
+                c = c + Integer.toString(A.get(x));
+            }
+
+
+            z = Long.parseLong(c);
+
+            String b = "";
+            for (int r = 0; r < This.size(); r++)
+            {
+                b = b + Integer.toString(This.get(r));
+            }
+
+            y = Long.parseLong(b);
+
+            if (z > y)
+            {
+                max.addAll(A);
+                min.addAll(This);
+                d = "-" + d;
+            }
+            else
+            {
+                max.addAll(This);
+                min.addAll(A);
+            }
+
+        }
+
+        else if (A.size () < This.size())
+        {
+            while (A.size () != This.size())
+            {
+                A.add(0,0);
+            }
+            max.addAll(This);
+            min.addAll(A);
+        }
+
+        else
+        {
+            while (This.size () != A.size())
+            {
+                This.add(0,0);
+            }
+            max.addAll(A);
+            min.addAll(This);
+            d = "-" + d;
+        }
+
+        for (int x = max.size()-1; x >= 0; x--)
+        {
+            if (max.get(x) - min.get(x) < 0)
+            {
+                array.add(0,(10+max.get(x)) - min.get(x));
+                if (max.get(x-1) == 0)
+                {
+                    max.set(x-2,max.get(x-2)-1);
+                    max.set(x-1, 9);
+                }
+                else
+                {
+                    max.set(x - 1, max.get(x - 1) - 1);
+                }
+            }
+
+            else
+            {
+                array.add(0,max.get(x)-min.get(x));
+            }
+        }
+
+
+        for (int x = 0; x < array.size(); x++)
+        {
+            d = d + Integer.toString(array.get(x));
+        }
+
+        myLong difference = new myLong();
+        difference.setLong(d);
+
         return difference;
     }
 
-    /*
-        multiply (myLong a) - this function multiplies two instances of myLong together
-
-        ONLY WORKS UP UNTIL THE PRODUCT EQUALS 9 FOR NOW
-     */
-
-    public int [] multiply (myLong a)
+    public myLong multiply(myLong a)
     {
-        int [] A = a.intToLong;
-        int [] This = this.intToLong;
+        ArrayList <Integer> This = this.intToLong;
+        myLong aValue = a;
 
-        int[] product = new int [100];
+        Long y;
+        int l = 1;
+        String d = "";
 
-        int carry = 0;
+        String b = "";
 
-        int multiply;
-
-
-        for (int i = This.length-1; i > 0; i--)
+        for (int r = 0; r < This.size(); r++)
         {
-            multiply = A[i] * This[i];
-
-            if (multiply >=10)
-            {
-                carry = multiply %10;
-                product [i] = multiply/10;
-                product[i] = A[i] * This[i]+carry;
-            }
-            else
-            {
-                product[i] = multiply;
-            }
-
+            b = b + Integer.toString(This.get(r));
         }
-        
-        /*
-            My carry function does not work as planned, and what I originally tried to do was to have a nested loop that stayed at
-            one value of A, then iterated through This to multiply that A value by This. Then I would increment the place of A to 
-            get to the next value and multiply, but also add a 0 to that value in accordance with the rules of multiplication, and 
-            so forth. But when I tried, I only returned an array of 0s, so at least this way, some value is returned, even if not totally
-            correct.
-        */
+        y = Long.parseLong(b);
 
-        for (int i = 0; i<100; i++)
+
+        while (l != y)
         {
-            System.out.print(product[i]);
+            a = a.add(aValue);
+            l++;
         }
 
+        ArrayList <Integer > A = a.intToLong;
+
+        for (int x = 0; x < A.size(); x++)
+        {
+            d = d + Integer.toString(A.get(x));
+        }
+
+        myLong product = new myLong();
+        product.setLong(d);
         return product;
+
     }
+
 }
