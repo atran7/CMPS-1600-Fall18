@@ -6,12 +6,12 @@ struct Node *head=NULL;
 typedef struct Node
 {
     int data;
-    struct Node *next;
+    struct  Node *next;
 }Node;
 
 void addNode(int data) //The new node is the temp node, and we are switching pointers around to add it to the beginning of the lsit
 {
-    struct Node *temp = (struct Node*)malloc(sizeof(struct Node));
+    Node *temp = (Node*)malloc(sizeof(Node));
     temp -> data=data;
     temp -> next=head;
     head=temp;
@@ -19,8 +19,8 @@ void addNode(int data) //The new node is the temp node, and we are switching poi
 
 void delete_at_head() //same idea as the addNode method, but I use the free() method to free up the memory allocation of the previous head
 {
-    struct Node *temp = head;
-    struct Node *newHead = NULL;
+    Node *temp = head;
+    Node *newHead = NULL;
 
     if (temp != NULL) {
         newHead = temp->next;
@@ -35,8 +35,8 @@ void delete_at_head() //same idea as the addNode method, but I use the free() me
 
 int main()
 {
-    struct Node *one = (struct Node*)malloc(sizeof(struct Node));
-    struct Node *two = (struct Node*)malloc(sizeof(struct Node));
+    Node *one = (Node*)malloc(sizeof(Node));
+    Node *two = (Node*)malloc(sizeof(Node));
 
     head = one;
 
