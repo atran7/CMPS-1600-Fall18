@@ -1,3 +1,8 @@
+/*
+* As per lab instructions, my code teases the user with the previous best score.
+* Therefore, it only rewrites the history file if there is a new best score, and uses that to taunt other players if they don't beat it
+*/
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
