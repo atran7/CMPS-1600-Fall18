@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int ask_in_range(min,max)
+{
+    int num;
+    scanf("%d", &num);
+    while (num<min || num > max)
+    {
+        printf("Your number is outside of [%d, %d]range.  Please enter a number: ",min, max);
+        scanf("%d", &num);
+    }
+    return num;
+}
+
+int get_random(rangemin, rangemax)
+{
+    srand(time(NULL));
+    int r = (rand()% 200) - 100;
+    return r;
+}
+
+
+int guessing_game(num, rangemin, rangemax)
+{
+    printf("Hello and welcome to the game.\nYou need to guess a number between %d and %d.\nPlease guess a number: ", rangemin, rangemax);
+    int guess = ask_in_range(rangemin, rangemax);
+    int numGuess = 1;
+    while (guess != num)
+    {
+        numGuess ++;
+        if (guess > num)
+        {
+            printf("Too high!\nPlease enter a number: ");
+            scanf("%d", &guess);
+        }
+        else if (guess < num)
+        {
+            printf("Too low!\nPlease enter a number: ");
+            scanf("%d", &guess);
+        }
+    }
+    printf("\nGood job! You took %d guesses.\n",numGuess);
+    return numGuess;
+}
+
+int main() {
+    printf("What is your name?");
+    char name [20];
+    scanf("%s", name);
+    int num = get_random(-100,100);
+    int guess = guessing_game(num,-100,100);
+    char prevName[20];
+    int prevNumGuess;
+
+    FILE* outFile;
+
+    if ((outFile = fopen("history.txt", "r")) == NULL)
+    {
+        outFile = fopen("history.txt", "w+");
+        fprintf(outFile, "%s \n",name);
+        fprintf(outFile, "%d", guess);
+        printf("You're the first player!");
+        fclose(outFile);
+
+    }
+    else
+    {
+        fscanf(outFile, "%s %d", &prevName, &prevNumGuess);
+
+        if (guess > prevNumGuess)
+        {
+            printf("But sorry, your score of %d did not beat %s with a score of %d.\nBetter luck next time!\n",guess,prevName,prevNumGuess);
+        }
+        else if (guess == prevNumGuess)
+        {
+            printf("But sorry, you are tied with %s with a score of %d. \nBetter luck next time\n!",prevName, guess);
+        }
+        else
+        {
+            outFile = fopen("history.txt", "w");
+            fprintf(outFile, "%s \n",name);
+            fprintf(outFile, "%d", guess);
+            printf("And congratulations! Your score of %d beat %s's score of %d \n", guess, prevName, prevNumGuess);
+        }
+    }
+
+    fclose(outFile);
+
+    return 0;
+}
+
+
+/*
+ * It will take a max of 1001 guesses to guess a number between -500 and 500, inclusive.
+ */
