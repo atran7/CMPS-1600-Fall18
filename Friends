@@ -329,7 +329,6 @@ void remove_friend (char email[])
     {
         printf("This person has no connections\n");
     }
-
     else if (c_head->next == NULL)
     {
         if (strcmp(c_head->friend1->email, email) == 0 | strcmp(c_head->friend2->email, email) == 0)
@@ -338,7 +337,6 @@ void remove_friend (char email[])
             printf("%s has been removed from connections\n", email);
         }
     }
-
     else
     {
         while (temp_connection->next != NULL)
@@ -365,13 +363,15 @@ void remove_friend (char email[])
 
     }
 
+
     if (head->next == NULL)
     {
         if (strcmp(head->email, email)==0)
         {
+            next_temp = head;
             head = NULL;
-            free(head);
-            printf("%s has been removed\n", email);
+            free(next_temp);
+            printf("%s has been removed!!\n", email);
             return;
         }
     }
@@ -451,7 +451,6 @@ int main()
         }
     }
     return 0;
-
 
 }
 
