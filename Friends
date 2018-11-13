@@ -455,36 +455,5 @@ int main()
 
 }
 
-/*
- * add - make a linked list with multiple pointers so a node can point to two things? To do mutual friends
- *
- * Have another list to check who is connected to who, basically have a box with two pointers,
- * and whoever the pointer points to are friends.
- * Max two per box, but have as many boxes as you want.
- * If you delete the person, you have to find every pointer to the person and delete it, so delete the pointer before the person
- *
- * For display, use the above pointer array thing to print out who the person is friends with
- *
- * connect - has to be linked list, basically add a node that points to two people
- *
- * disconnect - you remove the pointer, not the person though
- *
- * struct Person*head = null;
- * allocate memory
- * head -> email = 123;
- * head -> next = Person2
- * Then implement person2
- *
- * struct connection
- * {
- * email1 --> these are actually pointer that point to the list
- * email2
- * next, will be null, last element of linked list
- * }
- *
- * connect(email1,email2)
- * initialize the struct connection
- *
- */
 
 
