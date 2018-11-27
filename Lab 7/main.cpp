@@ -8,8 +8,13 @@
 using namespace std;
 
 int main() {
+    BankAccount*b;
+    BankAccount* a;
     BankAccount starter("Stella",0.0);
     BankAccount advanced("Addy", 500.0);
+
+    b = &starter;
+    a = &advanced;
     starter.toString();
     advanced.toString();
 
@@ -21,14 +26,24 @@ int main() {
     cout <<"Advanced balance after withdrawing $100: ";
     cout <<advanced.getBalance() << endl;
 
-    advanced.withdraw(200.0);
-    starter.deposit(200.0);
     cout<<"Both balances after transferring $200 from advanced to starter: "<<endl;
-    cout <<starter.getBalance() << endl;
-    cout <<advanced.getBalance() << endl;
+    if (advanced.transfer(b,200.0) == true)
+    {
+        cout <<"Starter balance: "<<starter.getBalance() << endl;
+        cout <<"Advanced balance: "<<advanced.getBalance() << endl;
+    }
+    else
+    {
+        cout<<"Insufficient funds."<<endl;
+    }
 
+
+    CheckingAccount* c;
+    SavingsAccount* s;
     SavingsAccount save ("Steve", 0.0, 0.01);
     CheckingAccount check ("Chelsea", 500.0);
+    c = &check;
+    s = &save;
     save.toString();
     check.toString();
 
@@ -40,11 +55,16 @@ int main() {
     cout <<"Check balance after withdrawing $100: ";
     cout <<check.getBalance() << endl;
 
-    save.withdraw(200.0);
-    check.deposit(200.0);
     cout<<"Both balances after transferring $200 from save to check: "<<endl;
-    cout <<save.getBalance() << endl;
-    cout <<check.getBalance() << endl;
+    if (save.transfer(c,200.0) == true)
+    {
+        cout <<"Save Balance: "<<save.getBalance() << endl;
+        cout <<"Check Balance: "<<check.getBalance() << endl;
+    }
+    else
+    {
+        cout<<"Insufficient funds."<<endl;
+    }
 
     save.addInterest();
     cout <<"Save balance after adding interest: ";
